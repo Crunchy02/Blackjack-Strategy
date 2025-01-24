@@ -39,14 +39,17 @@ if __name__ == '__main__':
 
     deck = preparingDeck(deck)
 
+    #Initializing arrays to hold stats for both when the player hits 17-21 and busts
     playerHittingStats = [[0 for cols in range(20)] for rows in range(15)]
     playerBustingStats = [[0 for cols in range(20)] for rows in range(3)]
 
     columnTotals = [0 for j in range(20)]
 
+    #The primary loop where the player draws 3 cards. Checks after each card drawn whether or not the player has hit 17-21
     for i in range(10000000):
         reshuffle = False
 
+        #Checking to see if either of the next two cards are the placeholder card
         if deck[0] == 0:
             deck = deck[1:]
             reshuffle = True
@@ -54,24 +57,30 @@ if __name__ == '__main__':
             deck = [deck[0]] + deck[2:]
             reshuffle = True
 
+        #Drawing the first two cards into the players hand (places them also at the end of the deck to be reused when deck is shuffled)
         playersHand = deck[:2]
         deck = deck[2:] + playersHand
 
+        #Checking the player's starting hand score
         score = 0
         for j in range(2):
             score += playersHand[j]
 
+        #If the player has 2 aces, both are changed to equal 1 in order to record stats of a starting hand of 2 (in case one were to split 2's)
         if score == 22:
             playersHand = [1, 1]
             score = 2
 
+        #If the player has an ace and a 2, the ace is changed to equal 1 in order to record stats of a starting hand of 3 (in case one were to split 3's)
         if score == 13 and (playersHand[0] == 2 or playersHand[1] == 2):
             playersHand = [2, 1]
             score = 3
 
+        #Recording total number of times each starting score occured
         column = score - 2
         columnTotals[column] += 1
 
+        #Drawing the 3 cards and checking/recording score after each draw
         for cardsDrawn in range(3):
             if deck[0] == 0:
                 deck = deck[1:]
@@ -80,11 +89,13 @@ if __name__ == '__main__':
             playersHand.append(deck.pop(0))
             deck.append(playersHand[-1])
 
+            #Checking if an ace needs to be changed to a 1
             if playersHand[-1] == 11 and score + playersHand[-1] > 21:
                 playersHand[-1] = 1
 
             score += playersHand[-1]
 
+            #Recording stats
             if score > 21:
                 playerBustingStats[cardsDrawn][column] += 1
             elif score > 16:
@@ -94,6 +105,7 @@ if __name__ == '__main__':
                 deck = preparingDeck(deck)
                 reshuffle = False
 
+    #Turning stats into percentages and exporting to an excel file
     for cols in range(20):
         for rows in range(15):
             ws.cell(row=3 + rows + rows // 5 * 2, column=cols + 3).value = playerHittingStats[rows][cols] / columnTotals[cols] * 100
