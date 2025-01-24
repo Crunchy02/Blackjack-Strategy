@@ -18,19 +18,25 @@ def preparingDeck(deck):
 
     return deck
 
+#The actions of the dealer drawing until reaching at least 17 or busting
 def dealerActions(deck, dealersCards, reshuffle):
+    #Checking the score of the cards dealt to the dealer
     score = 0
     for i in range(len(dealersCards)):
         score += dealersCards[i]
 
+    #Checking if the dealer got two aces and making one of them worth 1
     if dealersCards[-1] == 11 and score + dealersCards[-1] > 21:
         dealersCards[-1] = 1
 
+    #Having the dealer draw until score is at least 17
     while score < 17:
+        #Checking if the next card is the placeholder card
         if deck[0] == 0:
             deck = deck[1:]
             reshuffle = True
 
+        #Drawing top card of the deck into the dealer's hand (placing it at the bottom of the overall deck)
         dealersCards = dealersCards[:] + [deck[0]]
         deck = deck[1:] + [deck[0]]
 
@@ -70,14 +76,17 @@ if __name__ == '__main__':
     deck = preparingDeck(deck)
     bust = True
 
+    #Initializing the array to store stats in
     dealerCardStats = [[0 for cols in range(10)] for rows in range (6)]
 
+    #This is the primary loop where the dealer will be dealt two cards and then draw (if necessary) to at least 17 or till bust
     for i in range(130000000):
         if (i % 1300000) == 0:
             print('|', end="")
 
         reshuffle = False
 
+        #Checking if either of the next two cards are the placeholder card
         if deck[0] == 0:
             deck = deck[1:]
             reshuffle = True
@@ -90,6 +99,7 @@ if __name__ == '__main__':
         column = dealersHand[0] - 2
         deck, bust, score, reshuffle = dealerActions(deck, dealersHand, reshuffle)
 
+        #Recording the outcome of this particular hand
         if bust:
             row = 5
             dealerCardStats[row][column] += 1
@@ -100,6 +110,7 @@ if __name__ == '__main__':
         if reshuffle:
             deck = preparingDeck(deck)
 
+    #Turning the data into percentages and exporting it to excel file
     columnTotals = [0 for cols in range(10)]
     for cols in range(10):
         for rows in range(6):
