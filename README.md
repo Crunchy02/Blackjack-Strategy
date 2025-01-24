@@ -8,6 +8,7 @@ Current State:
  - Unrefined code to produce the percent chance of a player reaching 17-21 or busting based off what value their hand is (2-21) and how many cards they have drawn (1-3)
 
 Next Step Ideas:
+ - Comment both "Dealer's Stats" and "Player's Stats" codes
  - Create different strategies that can be read in to create different "players" and test how each strategy performs
  - Create a "place" where multiple people play blackjack: this is where the strategies will be tested
  - Look into the pattern of wins/losses for each strategy to see if there is any predictable "steakiness" seen, which could be potentially added into a strategy
