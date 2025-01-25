@@ -30,11 +30,11 @@ def dealerActions(deck, dealersCards, reshuffle):
         dealersCards[-1] = 1
 
     #Making dealer hit on soft 17
-    if score == 17
-        if dealersCards[0] == 11
+    if score == 17:
+        if dealersCards[0] == 11:
             dealersCards[0] = 1
             score = 7
-        if dealersCards[1] == 11
+        if dealersCards[1] == 11:
             dealersCards[1] = 1
             score = 7
 
