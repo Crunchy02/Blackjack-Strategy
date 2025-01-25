@@ -29,6 +29,15 @@ def dealerActions(deck, dealersCards, reshuffle):
     if dealersCards[-1] == 11 and score + dealersCards[-1] > 21:
         dealersCards[-1] = 1
 
+    #Making dealer hit on soft 17
+    if score == 17
+        if dealersCards[0] == 11
+            dealersCards[0] = 1
+            score = 7
+        if dealersCards[1] == 11
+            dealersCards[1] = 1
+            score = 7
+
     #Having the dealer draw until score is at least 17
     while score < 17:
         #Checking if the next card is the placeholder card
