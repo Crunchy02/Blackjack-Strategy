@@ -22,7 +22,7 @@ if __name__ == '__main__':
     startTime = time.time()
 
     #Opening excel file to store stats in
-    wb = openpyxl.load_workbook('Black Jack Data.xlsx')
+    wb = openpyxl.load_workbook('Blackjack Data.xlsx')
     ws = wb['Player Stats']
 
     #Makes a deck consisting of 6 standard 52 card decks
@@ -46,7 +46,10 @@ if __name__ == '__main__':
     columnTotals = [0 for j in range(20)]
 
     #The primary loop where the player draws 3 cards. Checks after each card drawn whether or not the player has hit 17-21
-    for i in range(10000000):
+    for i in range(130000000):
+        if (i % 1300000) == 0:
+            print('|', end="")
+        
         reshuffle = False
 
         #Checking to see if either of the next two cards are the placeholder card
@@ -114,7 +117,7 @@ if __name__ == '__main__':
         for rows in range(3):
             ws.cell(row=3 + rows * 7, column=cols + 26).value = playerBustingStats[rows][cols] / columnTotals[cols] * 100
 
-    wb.save('Black Jack Data.xlsx')
+    wb.save('Blackjack Data.xlsx')
 
     print(columnTotals)
     print(time.time() - startTime)
